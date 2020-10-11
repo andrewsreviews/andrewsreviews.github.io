@@ -25,7 +25,7 @@ layout: default
 
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="col-lg-12 col-md-10 mx-auto">
 
         {{ content }}
 
@@ -33,23 +33,34 @@ layout: default
         {% for post in site.posts limit : 5 %}
 
         <article class="post-preview">
-          <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
-            <h2 class="post-title">{{ post.title }}</h2>
-            {% if post.subtitle %}
-            <h3 class="post-subtitle">{{ post.subtitle }}</h3>
-            {% else %}
-            <h3 class="post-subtitle">{{ post.excerpt | strip_html | truncatewords: 15 }}</h3>
-            {% endif %}
-          </a>
-          <p class="post-meta">Posted by
-            {% if post.author %}
-            {{ post.author }}
-            {% else %}
-            {{ site.author }}
-            {% endif %}
-            on
-            {{ post.date | date: '%B %d, %Y' }} &middot; {% include read_time.html content=post.content %}            
-          </p>
+          <div class="row">
+            <div class="col-md-4">
+              <img class="img-thumbnail" src="{{ post.background | prepend: site.baseurl | replace: '//', '/' }}">
+            </div>
+            <div class="col">
+              <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
+                <h2 class="post-title">{{ post.title }}</h2>
+                {% if post.subtitle %}
+                <h4 class="post-subtitle">{{ post.subtitle }}</h4>
+                {% else %}
+                <h4 class="post-subtitle">{{ post.excerpt | strip_html | truncatewords: 15 }}</h4>
+                {% endif %}
+              </a>
+              <p class="post-meta">
+                {% if post.rating %}
+                Rating: <span class="{% if post.rating > "850,000" %} text-success {% elsif post.rating > "500,000" %} text-warning {% else %} text-danger {% endif %}">{{ post.rating }}</span>/1,000,000
+                <br/>
+                {% endif %}
+                Reviewed by
+                {% if post.author %}
+                {{ post.author }}
+                {% else %}
+                {{ site.author }}
+                {% endif %}
+                on {{ post.date | date: '%B %d, %Y' }} &middot; {% include read_time.html content=post.content %}
+              </p>
+            </div>
+          </div>
         </article>
 
         <hr>
@@ -58,7 +69,7 @@ layout: default
 
         <!-- Pager -->
         <div class="clearfix">
-          <a class="btn btn-primary float-right" href="{{"/posts" | relative_url }}">View All Posts &rarr;</a>
+          <a class="btn btn-primary float-right" href="{{"/reviews" | relative_url }}">View All Reviews &rarr;</a>
         </div>
 
       </div>

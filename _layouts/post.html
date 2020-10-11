@@ -31,8 +31,18 @@ layout: default
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-
         {{ content }}
+
+        <div class="text-center">
+          {% if page.rating %}
+          Rating: <span class="{% if page.rating > "850,000" %} text-success {% elsif page.rating > "500,000" %} text-warning {% else %} text-danger {% endif %}">{{ page.rating }}</span>/1,000,000
+          {% endif %}
+
+          {% if page.category == "music" %}
+          <div><i>{{ page.title }}</i> - {{ page.artist }}</div>
+          <img class="img-thumbnail" src="{{ page.background | prepend: site.baseurl | replace: '//', '/' }}">
+          {% endif %}
+        </div>
 
         <hr>
 
